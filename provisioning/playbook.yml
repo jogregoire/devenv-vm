@@ -1,0 +1,38 @@
+---
+# Install a Python & Node.js development environment, along with Redis and Docker.
+
+- hosts: 127.0.0.1
+  connection: local
+  become: true
+  become_method: sudo
+  vars:
+    host_name: "devenv"
+    nodejs_version: "6.7.0"  # nodejs version to install.
+    nodejs_install_method: "binary"  # "package" or "source" or "binary"
+    redis_port: 6379
+    redis_bind_interface: 127.0.0.1
+
+  roles:
+  - hostname
+  - docker
+  - ANXS.build-essential
+  - ANXS.nodejs
+  - geerlingguy.redis
+
+  tasks:
+
+  - name: Main playbook | upgrade apt packages
+    apt: update_cache=yes cache_valid_time=3600
+
+  - name: Main playbook | install additional packages
+    apt: pkg={{ item }} state=installed
+    with_items:
+      - htop
+      - linux-tools-common  # linux perf tool
+      - python3-pip
+
+  - name: Main playbook | install python3 modules globally
+    pip: name=pylint executable=pip3
+
+  - name: Main playbook | install npm modules globally
+    npm: name=jslint global=yes

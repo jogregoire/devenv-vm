@@ -1,0 +1,6 @@
+# roles to install
+
+# from ansible galaxy
+- src: ANXS.build-essential
+- src: ANXS.nodejs
+- src: geerlingguy.redis

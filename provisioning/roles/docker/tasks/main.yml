@@ -1,0 +1,14 @@
+---
+- name: Docker | upgrade apt packages
+  apt: update_cache=yes
+
+- name: Docker | install list of packages
+  apt: pkg={{ item }} state=installed
+  with_items:
+#      - build-essential
+    - htop
+    - linux-tools-common  # perf
+    - docker.io
+
+- name: Docker | let default user run docker
+  user: name={{docker_user}} groups=docker append=yes

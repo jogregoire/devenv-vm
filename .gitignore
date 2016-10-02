@@ -1,0 +1,13 @@
+# Vagrant stuff
+.vagrant
+*.log
+
+# Ansible
+provisioning/roles/*.*
+
+# Python
+*.pyc
+
+# Node
+npm-debug.log*
+node_modules

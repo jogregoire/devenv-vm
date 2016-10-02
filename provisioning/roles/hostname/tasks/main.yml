@@ -1,0 +1,9 @@
+---
+- name: Hostname | change hostname
+  hostname: name={{host_name}}
+
+- name: Hostname | add hostname in /etc/hosts ipv4
+  lineinfile: dest=/etc/hosts regexp="^127.0.0.1 {{host_name}}" insertafter=EOF create=true line="127.0.0.1 {{host_name}}"
+
+- name: Hostname | add hostname in /etc/hosts ipv6
+  lineinfile: dest=/etc/hosts regexp="^::1 {{host_name}}" insertafter=EOF create=true line="::1 {{host_name}}"
