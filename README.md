@@ -1,18 +1,18 @@
 # Set up a virtual machine as a development environment
 
-Create a reproducible, automated, isolated development environment for Python and Node.js. Redis and Docker are also there. The OS is Ubuntu 16.04.
+Create a reproducible, automated, isolated development environment for Python and Node.js. Redis is also there. The OS is Ubuntu 16.04.
 
-# Vagrant, VirtualBox and Ansible
+## Vagrant, VirtualBox and Ansible
  
 Vagrant, VirtualBox and Ansible can be used to automate the creation and provisioning of a virtual machine (VM).
 
 Vagrant lets you script the creation of the VM. The machine type is defined in the Vagrantfile. In the background, Vagrant relies on VirtualBox as the default provider. The Vagrantfile also sets a provisioner (Ansible here) that configures the VM.
 
-The Ansible playbook in this repo installs Node.js, Redis and Docker. You can easily remove what you don't want by removing roles in the `provisioning/playbook.yml` file. Python 2.7 and Python 3.5 are already provided by Ubuntu.
+The Ansible playbook in this repo installs Node.js, Redis. You can easily remove what you don't want by removing roles in the `provisioning/playbook.yml` file. Python 2.7 and Python 3.5 are already provided by Ubuntu.
 
 The provided Vagrantfile works on all OS, including Windows; Usually, Ansible runs from the host. However, Ansible from a Windows control machine is not supported. Instead, using the `ansible_local` provisioner, Vagrant install Ansible and execute the playbook directly _on_ the VM. 
 
-# Requirements
+## Requirements
 
 You need the following:
 
@@ -23,7 +23,7 @@ You need the following:
     - install the vagrant-proxyconf plugin: `vagrant plugin install vagrant-proxyconf`
     - set the http_proxy, https_proxy, and no_proxy environment variable on your host.
 
-# How to use
+## How to use
 
 Open a shell prompt, cd into the folder containing the Vagrantfile, and run `vagrant up`. After a few minutes, your VM is ready. `vagrant ssh` to connect to the machine via SSH. 
 
@@ -39,20 +39,22 @@ If you already have Ubuntu 16.04 running and don't need to create the VM, you ca
 
 ```
 # Install Ansible
-apt-get -y update && apt-get -y upgrade
-apt-get -y install software-properties-common
-apt-add-repository ppa:ansible/ansible
-apt-get -y update
-apt-get -y install ansible
+pip install ansible
 
 # Run Ansible playbook
 ansible-galaxy install -r provisioning/requirements.yml
 ansible-playbook -c local provisioning/playbook.yml
 ```
 
-# Troubleshooting
+As a bonus, you can install docker. Go to /vagrant/provisioning in the VM and run the following command:
 
-## ansible local provisioner bug
+``ansible-playbook -c local provisioning/playbook.yml``
+
+Then log-out, log-in.
+
+## Troubleshooting
+
+### ansible local provisioner bug
 
 ```
 $ vagrant up
@@ -68,6 +70,6 @@ ansible local provisioner:
 
 Please upgrade Vagrant to >= 1.8.5. [](https://github.com/mitchellh/vagrant/issues/6740)
 
-# Author
+## Author
 
 Joel Gregoire

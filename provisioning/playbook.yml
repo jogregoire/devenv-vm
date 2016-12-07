@@ -14,7 +14,6 @@
 
   roles:
   - hostname
-  - docker
   - ANXS.build-essential
   - ANXS.nodejs
   - geerlingguy.redis
