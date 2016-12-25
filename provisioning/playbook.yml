@@ -28,10 +28,21 @@
     with_items:
       - htop
       - linux-tools-common  # linux perf tool
+      - python-pip
       - python3-pip
 
   - name: Main playbook | install python3 modules globally
-    pip: name=pylint executable=pip3
+    pip: name={{ item }} executable=pip3
+    with_items:
+      - pylint
+
+  - name: Main playbook | install python3 modules globally
+    pip: name={{ item }} executable=pip
+    with_items:
+      - supervisor
 
   - name: Main playbook | install npm modules globally
-    npm: name=jslint global=yes
+    npm: name={{ item }} global=yes
+    with_items:
+      - jslint
+      - pm2
